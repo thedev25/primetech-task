@@ -1,35 +1,64 @@
-* {
-    box-sizing: border-box;
+.dnd {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 100px;
+}
+.todo-add input {
+  padding: 8px 16px;
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+  border: 2px solid #1eb069;
+  color: #1eb069;
+  font-size: 16px;
+}
+.todo-add input::placeholder {
+  color: #1eb069;
+  font-family: 500;
+  font-size: 16px;
+}
+.todo-add button {
+  padding: 8px 16px;
+  border-bottom-right-radius: 12px;
+  border-top-right-radius: 12px;
+  border: 2px solid #1eb069;
+  background-color: #1eb069;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
 }
 
-.App {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
+.todo-page {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.App .column {
-    width: 30%;
-}
-
-.droppable-col {
-    width: 100%;
-    background-color: gray;
-    padding: 10px 10px 0 10px;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
+.todo-card {
+  width: 250px;
+  height: max-content;
+  background-color: #1eb069;
+  padding: 10px 10px 0 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
 }
 
 .item {
-    margin-bottom: 10px;
-    background-color: gray;
-    color: white;
-    border: 1px solid white;
-    padding: 5px;
-    border-radius: 7px;
-}
-
-.item.dragging {
-    background-color: coral;
+  margin-bottom: 10px;
+  background-color: rgb(173, 163, 151);
+  color: rgb(23, 20, 20);
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
 }

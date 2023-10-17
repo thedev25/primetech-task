@@ -1,63 +1,67 @@
-import React, {useState} from 'react';
-import './App.css';
-import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
+import React, { useState } from "react";
+import "./App.css";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
-import {v4} from "uuid";
+import { v4 } from "uuid";
 
 const item = {
   id: v4(),
-  name: "Clean the house"
-}
+  name: "Prime Tech",
+};
 
 const item2 = {
   id: v4(),
-  name: "Wash the car"
-}
+  name: "Task",
+};
 
 function App() {
-  const [text, setText] = useState("")
+  const [text, setText] = useState("");
   const [state, setState] = useState({
-    "todo": {
+    todo: {
       title: "Todo",
-      items: [item, item2]
+      items: [item, item2],
     },
     "in-progress": {
       title: "In Progress",
-      items: []
+      items: [item, item2],
     },
-    "done": {
+    done: {
       title: "Completed",
-      items: []
-    }
-  })
+      items: [item, item2],
+    },
+  });
 
-  const handleDragEnd = ({destination, source}) => {
+  const handleDragEnd = ({ destination, source }) => {
     if (!destination) {
-      return
+      return;
     }
 
-    if (destination.index === source.index && destination.droppableId === source.droppableId) {
-      return
+    if (
+      destination.index === source.index &&
+      destination.droppableId === source.droppableId
+    ) {
+      return;
     }
 
-    // Creating a copy of item before removing it from state
-    const itemCopy = {...state[source.droppableId].items[source.index]}
+    const itemCopy = { ...state[source.droppableId].items[source.index] };
 
-    setState(prev => {
-      prev = {...prev}
-      // Remove from previous items array
-      prev[source.droppableId].items.splice(source.index, 1)
+    setState((prev) => {
+      prev = { ...prev };
 
+      prev[source.droppableId].items.splice(source.index, 1);
 
-      // Adding to new items array location
-      prev[destination.droppableId].items.splice(destination.index, 0, itemCopy)
+      prev[destination.droppableId].items.splice(
+        destination.index,
+        0,
+        itemCopy
+      );
 
-      return prev
-    })
-  }
+      return prev;
+    });
+  };
 
   const addItem = () => {
-    setState(prev => {
+    setState((prev) => {
       return {
         ...prev,
         todo: {
@@ -65,64 +69,83 @@ function App() {
           items: [
             {
               id: v4(),
-              name: text
+              name: text,
             },
-            ...prev.todo.items
-          ]
-        }
-      }
-    })
+            ...prev.todo.items,
+          ],
+        },
+      };
+    });
 
-    setText("")
-  }
+    setText("");
+  };
 
   return (
-    <div className="App">
-      <div>
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)}/>
-        <button onClick={addItem}>Add</button>
+    <div className="dnd">
+      <div className="todo-add">
+        <input
+          placeholder="Please Add Your Task..."
+          autocomplete="off"
+          type="text"
+          autocapitalize="none"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button type="button" onClick={addItem}>
+          Add
+        </button>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        {_.map(state, (data, key) => {
-          return(
-            <div key={key} className={"column"}>
-              <h3>{data.title}</h3>
-              <Droppable droppableId={key}>
-                {(provided, snapshot) => {
-                  return(
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className={"droppable-col"}
-                    >
-                      {data.items.map((el, index) => {
-                        return(
-                          <Draggable key={el.id} index={index} draggableId={el.id}>
-                            {(provided, snapshot) => {
-                              console.log(snapshot)
-                              return(
-                                <div
-                                  className={`item ${snapshot.isDragging && "dragging"}`}
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  {el.name}
-                                </div>
-                              )
-                            }}
-                          </Draggable>
-                        )
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  )
-                }}
-              </Droppable>
-            </div>
-          )
-        })}
-      </DragDropContext>
+      <div className="container">
+        <div className="todo-page">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            {_.map(state, (data, key) => {
+              return (
+                <div key={key}>
+                  <h3>{data.title}</h3>
+                  <Droppable droppableId={key}>
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={"todo-card"}
+                        >
+                          {data.items.map((el, index) => {
+                            return (
+                              <Draggable
+                                key={el.id}
+                                index={index}
+                                draggableId={el.id}
+                              >
+                                {(provided, snapshot) => {
+                                  console.log(snapshot);
+                                  return (
+                                    <div
+                                      className={`item ${
+                                        snapshot.isDragging && "dragging"
+                                      }`}
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                    >
+                                      {el.name}
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      );
+                    }}
+                  </Droppable>
+                </div>
+              );
+            })}
+          </DragDropContext>
+        </div>
+      </div>
     </div>
   );
 }
