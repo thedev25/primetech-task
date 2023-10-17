@@ -16,12 +16,12 @@
   padding: 8px 16px;
   border-bottom-left-radius: 12px;
   border-top-left-radius: 12px;
-  border: 2px solid #1eb069;
+  border: 2px solid var(--primary-color);
   color: #1eb069;
   font-size: 16px;
 }
 .todo-add input::placeholder {
-  color: #1eb069;
+  color: var(--primary-color);
   font-family: 500;
   font-size: 16px;
 }
@@ -29,9 +29,9 @@
   padding: 8px 16px;
   border-bottom-right-radius: 12px;
   border-top-right-radius: 12px;
-  border: 2px solid #1eb069;
-  background-color: #1eb069;
-  color: white;
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--second-color);
   font-weight: bold;
   font-size: 16px;
 }
@@ -47,7 +47,8 @@
 .todo-card {
   width: 250px;
   height: max-content;
-  background-color: #1eb069;
+  background-color: var(--primary-color);
+  margin-top: 10px;
   padding: 10px 10px 0 10px;
   border-radius: 7px;
   display: flex;
@@ -56,9 +57,9 @@
 
 .item {
   margin-bottom: 10px;
-  background-color: rgb(173, 163, 151);
+  background-color: var(--item-bg-color);
   color: rgb(23, 20, 20);
-  border: 1px solid white;
+  border: 1px solid var(--second-color);
   padding: 5px;
   border-radius: 7px;
 }

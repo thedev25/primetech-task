@@ -4,3 +4,8 @@
   margin: 0;
   font-family: sans-serif;
 }
+:root {
+  --primary-color: #1eb069;
+  --second-color: #fff;
+  --item-bg-color: rgb(173, 163, 151);
+}
